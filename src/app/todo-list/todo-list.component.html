@@ -1,0 +1,70 @@
+<h2>Todos</h2>
+
+<div class="addItem">
+
+  <!-- Fach -->
+  <label for="subject">Wähle ein Fach aus:</label>
+  <select id="subject" name="subject" [(ngModel)]="subject"> 
+    <option value="Mathe">Mathematik</option>
+    <option value="Französisch">Französisch</option>
+    <option value="Englisch">Englisch</option>
+    <option value="Spanisch">Spanisch</option>
+    <option value="Latein">Latein</option>
+    <option value="PuP">Psychologie & Philosophie</option>
+    <option value="Biologie">Biologie</option>
+    <option value="Geschichte">Geschichte</option>
+    <option value="Geographie">Geographie</option>
+    <option value="Religion">Religion</option>
+    <option value="Zeichnen">Zeichnen</option>
+  </select> <br/>
+
+  <!-- Gruppe -->
+  <label for="group">Wähle eine Gruppe aus:</label>
+  <select id="group" name="group" [(ngModel)]="group"> 
+    <option value="7A">7A</option>
+    <option value="7B">7B</option>
+    <option value="WPG1">Info-WPG</option>
+    <option value="WPG2">Französisch-WPG</option>
+    <option value="WPG3">Englisch-WPG</option>
+    <option value="WPG4">Geschichte-WPG</option>
+    <option value="WPG5">Biologie-WPG</option>
+    <option value="Robotik">Robotik</option>
+
+    
+  </select> <br/>
+
+  Beschreibung: <input type="text" [(ngModel)]="todoDescription"> <br/>
+  
+  <!-- Kategorie -->
+  <label for="category">Wähle eine Kategorie aus:</label>
+  <select id="category" name="category" [(ngModel)]="category"> 
+    <option value="HÜ">Hausübung</option>
+    <option value="WH">Wiederholung</option>
+    <option value="Test">Test</option>
+    <option value="SA">Schularbeit</option>
+  </select> <br/>
+
+  Datum <input type="date" [(ngModel)]="todoDueDate"> <br/>
+  <button (click)="addTodo()">Hinzufügen</button>
+</div>
+
+<p>Done anzeigen: <input type="checkbox" [(ngModel)]="showDone"></p>
+
+<!-- <div *ngFor="let item of todoListService.getTodos(showDone ? undefined : false) | async"> -->
+<div *ngFor="let item of (todoListService.todos | todoFilterPipe: (showDone ? null : false))">
+  <button (click)="todoListService.toggleDoneStateById(item)">Done</button>
+  <button (click)="todoListService.deleteTodoById(item.id)">Löschen</button>
+  <span [ngStyle]="{'text-decoration': (item.doneDate ? 'line-through' : 'none')}">
+    <span class="date">{{ item.dueDate.seconds * 1000 | date:'EE, dd.MM.' }}</span> &nbsp;
+    <span class="subject">{{ item.subject }}</span> &nbsp;
+    <span class="group">{{ item.group }}</span> &nbsp;
+    <span class="description">{{ item.description }}</span> &nbsp;
+    <span class="category">{{ item.category }}</span>
+    
+  </span>
+</div>
+
+<p>
+  Todo: {{ (todoListService.todos | todoFilterPipe: false).length }}<br />
+  Done: {{ (todoListService.todos | todoFilterPipe: true).length }}
+</p>

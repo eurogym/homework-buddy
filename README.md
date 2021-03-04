@@ -1,3 +1,1 @@
 # homework-buddy
-
-Fürli
