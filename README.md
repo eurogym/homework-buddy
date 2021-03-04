@@ -1,1 +1,2 @@
 # homework-buddy
+Fritz Kürmayr
