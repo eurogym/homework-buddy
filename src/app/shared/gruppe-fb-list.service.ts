@@ -44,7 +44,7 @@ export class GruppeFBListService {
   }
 
   public addGruppe(gruppenname: string): void {
-    this.firestore.collection('Gruppen').add
+    this.firestore.collection('gruppen').add
     ({ gruppenname:gruppenname , userUid: this.userUid });
   }
  
