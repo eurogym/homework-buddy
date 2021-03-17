@@ -2,8 +2,9 @@
 
 <div class="addItem">
 
-    <label for="Gruppenname">Gruppe erstellen:</label>
-    <input type="text" [(ngModel)]="Gruppenname"> <br/>
+    <label for="Gruppenname">neue Gruppe erstellen:</label> &nbsp;
+    Gruppenname: <input type="text" [(ngModel)]="Gruppenname">
+    Beschreibung: <input type="text" [(ngModel)]="Beschreibung"> <br/>
     <button (click)="addGruppe()">Hinzufügen</button>
 
 </div>
@@ -13,10 +14,21 @@
     <span class="Gruppenname">{{ item.Gruppenname}}</span> &nbsp;
 </div>
 -->
-
+<!--
 <div *ngFor="let item of (GruppenListService.gruppen)">
     <button (click)="GruppenListService.deleteGruppeById(item.id)">Löschen</button> &nbsp;
       <span class="Gruppe">{{item.Gruppenname}}</span>
   </div>
+  -->
 
+<table>
+    <tr>
+        <th>Gruppenname</th>
+        <th>Beschreibung</th>
+    </tr>
+    <tr *ngFor="let item of (GruppenListService.gruppen)">
+        <td class="Gruppenname">{{ item.Gruppenname }}</td>
+        <td class="Beschreibung">{{ item.Beschreibung }}</td>
+    </tr>
+</table>
 

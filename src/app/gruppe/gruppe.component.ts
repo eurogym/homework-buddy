@@ -10,6 +10,7 @@ import { GruppeFBListService} from '../shared/gruppe-fb-list.service';
 export class GruppeComponent implements OnInit {
 
   public Gruppenname = '';
+  public Beschreibung = '';
 
   constructor(public GruppenListService: GruppeFBListService) {
   }
@@ -18,10 +19,10 @@ export class GruppeComponent implements OnInit {
   }
   public addGruppe(): void {
   
-    if (this.Gruppenname) {
-      this.GruppenListService.addGruppe(this.Gruppenname);
+    if (this.Gruppenname ) {
+      this.GruppenListService.addGruppe(this.Gruppenname, this.Beschreibung);
       this.Gruppenname = '';
-    
+      this.Beschreibung = '';
     }
   }
 }
