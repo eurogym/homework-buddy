@@ -69,3 +69,46 @@
   Todo: {{ (todoListService.todos | todoFilterPipe: false).length }}<br />
   Done: {{ (todoListService.todos | todoFilterPipe: true).length }}
 </p>
+
+
+<!--  Neue Tabelle -->
+<table mat-table [dataSource]="(todoListService.todos | todoFilterPipe: (showDone ? null : false))" class="mat-elevation-z8">
+
+  <!-- subject Column -->
+  <ng-container matColumnDef="subject">
+    <th mat-header-cell *matHeaderCellDef> Subject </th>
+    <td mat-cell *matCellDef="let element"> {{element.subject}} </td>
+  </ng-container>
+
+  <!-- Name Column -->
+  <ng-container matColumnDef="group">
+    <th mat-header-cell *matHeaderCellDef> Group </th>
+    <td mat-cell *matCellDef="let element"> {{element.group}} </td>
+  </ng-container>
+
+  <!-- Weight Column -->
+  <ng-container matColumnDef="category">
+    <th mat-header-cell *matHeaderCellDef> Category </th>
+    <td mat-cell *matCellDef="let element"> {{element.category}} </td>
+  </ng-container>
+
+  <!-- Symbol Column -->
+  <ng-container matColumnDef="todoDescription">
+    <th mat-header-cell *matHeaderCellDef> description </th>
+    <td mat-cell *matCellDef="let element"> {{element.description}} </td>
+  </ng-container>
+
+  <!-- TodoDueDate Column -->
+  <ng-container matColumnDef="todoDueDate">
+    <th mat-header-cell *matHeaderCellDef> ToDueDate</th>
+    <td mat-cell *matCellDef="let element"> {{element.todoDueDate}} </td>
+  </ng-container>
+
+  
+  
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"
+      (click)="todoListService.toggleDoneStateById(row.id)">
+  </tr> 
+</table> 
