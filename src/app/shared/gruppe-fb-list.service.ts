@@ -21,7 +21,7 @@ export class GruppeFBListService {
         this.userUid = state.uid;
 
         this.GruppenSubscription = this.firestore.collection<any>(
-          'Gruppen', ref => {
+          'gruppen', ref => {
             return ref.where('userUid', '==', state.uid);
           }).snapshotChanges().subscribe(data => {
             this.gruppen = data
