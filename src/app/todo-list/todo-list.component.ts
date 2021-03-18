@@ -16,6 +16,7 @@ export class TodoListComponent implements OnInit {
   public subject ='';
   public group ='';
   public category ='';
+  public displayedColumns = ['subject','group', 'category', 'todoDescription','todoDueDate' ]
 
 
   constructor(public todoListService: TodoListService, public GruppenFBListservice: GruppeFBListService) {

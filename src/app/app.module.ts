@@ -15,6 +15,7 @@ import { AngularFireAuthModule } from '@angular/fire/auth';
 import { environment } from 'src/environments/environment';
 import { TodoFilterPipePipe } from './pipes/todo-filter-pipe.pipe';
 
+import {MatTableModule, _MatTableDataSource} from '@angular/material/table';
 @NgModule({
   declarations: [
     AppComponent,
@@ -29,7 +30,8 @@ import { TodoFilterPipePipe } from './pipes/todo-filter-pipe.pipe';
     FormsModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFirestoreModule, // imports firebase/firestore, only needed for database features
-    AngularFireAuthModule
+    AngularFireAuthModule,
+    MatTableModule
   ],
   providers: [],
   bootstrap: [AppComponent]
