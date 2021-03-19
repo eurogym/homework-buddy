@@ -24,8 +24,6 @@
       
     <option *ngFor="let item of (GruppenFBListservice.gruppen)" [value]="item.id">{{item.Gruppenname}}</option>
 
-
-
   </select> <br/>
 
   <!-- Kategorie -->
@@ -40,7 +38,6 @@
   Datum <input type="date" [(ngModel)]="todoDueDate"> <br/>
   Beschreibung: <br/>
   <textarea cols = "50" rows = "10" input type="text" [(ngModel)]="todoDescription"> </textarea> <br/>
-
   <button (click)="addTodo()">Hinzufügen</button>
 </div>
 
@@ -59,12 +56,6 @@
 
   </span>
 </div>
-
-<p>
-  Todo: {{ (todoListService.todos | todoFilterPipe: false).length }}<br />
-  Done: {{ (todoListService.todos | todoFilterPipe: true).length }}
-</p>
-
 
 <!--  Neue Tabelle -->
 <table mat-table [dataSource]="(todoListService.todos | todoFilterPipe: (showDone ? null : false))" class="mat-elevation-z8">
@@ -106,7 +97,12 @@
     <td mat-cell *matCellDef="let element"> {{element.description}} </td>
   </ng-container>
 
- 
+  <!-- Toggle Done Column-->
+  <ng-container matColumnDef="deleteTodoById">
+    <th mat-header-cell  *matHeaderCellDef > Löschen </th>
+    <td mat-cell *matCellDef="let element" > 
+      <button (click)="todoListService.deleteTodoById(element.id)"> Löschen </button>
+  </ng-container>
 
   
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
@@ -114,3 +110,8 @@
       (click)="todoListService.toggleDoneStateById(row.id)">
   </tr> 
 </table> 
+
+<p>
+  Todo: {{ (todoListService.todos | todoFilterPipe: false).length }}<br />
+  Done: {{ (todoListService.todos | todoFilterPipe: true).length }}
+</p>
