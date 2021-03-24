@@ -19,9 +19,7 @@ export class TodoListService {
         this.userUid = state.uid;
 
         this.todoSubscription = this.firestore.collection<any>(
-          'todos', ref => {
-            return ref.where('userUid', '==', state.uid);
-          }).snapshotChanges().subscribe(data => {
+          'todos').snapshotChanges().subscribe(data => {
             this.todos = data
               .map(e => {
                 return {

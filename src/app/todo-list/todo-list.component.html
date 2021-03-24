@@ -4,7 +4,7 @@
 
   <!-- Fach -->
   <label for="subject">Wähle ein Fach aus:</label>
-  <select id="subject" name="subject" [(ngModel)]="subject"> 
+  <select id="subject" name="subject" [(ngModel)]="subject">
     <option value="Mathe">Mathematik</option>
     <option value="Französisch">Französisch</option>
     <option value="Englisch">Englisch</option>
@@ -20,15 +20,15 @@
 
   <!-- Gruppe -->
   <label for="gruppen">Wähle eine Gruppe aus:</label>
-  <select id="gruppen" name="gruppen" [(ngModel)]="group">        
-      
+  <select id="gruppen" name="gruppen" [(ngModel)]="group">
+
     <option *ngFor="let item of (GruppenFBListservice.gruppen)" [value]="item.id">{{item.Gruppenname}}</option>
 
   </select> <br/>
 
   <!-- Kategorie -->
   <label for="category">Wähle eine Kategorie aus:</label>
-  <select id="category" name="category" [(ngModel)]="category"> 
+  <select id="category" name="category" [(ngModel)]="category">
     <option value="HÜ">Hausübung</option>
     <option value="WH">Wiederholung</option>
     <option value="Test">Test</option>
@@ -43,28 +43,14 @@
 
 <p>Done anzeigen: <input type="checkbox" [(ngModel)]="showDone"></p>
 
-<!-- <div *ngFor="let item of todoListService.getTodos(showDone ? undefined : false) | async"> -->
-<div *ngFor="let item of (todoListService.todos | todoFilterPipe: (showDone ? null : false))">
-  <button (click)="todoListService.toggleDoneStateById(item)">Done</button>
-  <button (click)="todoListService.deleteTodoById(item.id)">Löschen</button>
-  <span [ngStyle]="{'text-decoration': (item.doneDate ? 'line-through' : 'none')}">
-    <span class="date">{{ item.dueDate.seconds * 1000 | date:'EE, dd.MM.' }}</span> &nbsp;
-    <span class="subject">{{ item.subject }}</span> &nbsp;
-    <span class="group">{{ item.group }}</span> &nbsp;
-    <span class="category">{{ item.category }}</span> &nbsp;
-    <span class="description">{{ item.description }}</span> 
-
-  </span>
-</div>
-
 <!--  Neue Tabelle -->
 <table mat-table [dataSource]="(todoListService.todos | todoFilterPipe: (showDone ? null : false))" class="mat-elevation-z8">
 
   <!-- Toggle Done Column-->
   <ng-container matColumnDef="actions">
     <th mat-header-cell  *matHeaderCellDef > Actions </th>
-    <td mat-cell *matCellDef="let element" > 
-      <button (click)="todoListService.toggleDoneStateById(element)"> Done </button>
+    <td mat-cell *matCellDef="let element" >
+      <button mat-button (click)="todoListService.toggleDoneStateById(element)"><div *ngIf="!element.doneDate">Done</div><div *ngIf="element.doneDate">Undo</div></button>
   </ng-container>
 
    <!-- TodoDueDate Column -->
@@ -100,16 +86,16 @@
   <!-- Toggle Done Column-->
   <ng-container matColumnDef="deleteTodoById">
     <th mat-header-cell  *matHeaderCellDef > Löschen </th>
-    <td mat-cell *matCellDef="let element" > 
-      <button (click)="todoListService.deleteTodoById(element.id)"> Löschen </button>
+    <td mat-cell *matCellDef="let element" >
+      <button mat-button color="red" (click)="todoListService.deleteTodoById(element.id)">X</button>
   </ng-container>
 
-  
+
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
   <tr mat-row *matRowDef="let row; columns: displayedColumns;"
       (click)="todoListService.toggleDoneStateById(row.id)">
-  </tr> 
-</table> 
+  </tr>
+</table>
 
 <p>
   Todo: {{ (todoListService.todos | todoFilterPipe: false).length }}<br />
