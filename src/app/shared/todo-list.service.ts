@@ -1,45 +1,41 @@
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Injectable } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription, empty } from 'rxjs';
+import { filter, map, switchMap } from 'rxjs/operators';
 import { Todo } from './todo';
+import { GruppeFB } from './gruppe-fb';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TodoListService {
-  public todos: Todo[] = [];
-
+  public todos$: Observable<Todo[]>;
   private userUid = '';
-  private todoSubscription: Subscription = Subscription.EMPTY;
 
   constructor(public firestore: AngularFirestore, public afAuth: AngularFireAuth) {
+    this.todos$ = empty();
     this.afAuth.authState.subscribe(state => {
       if (state?.uid) {
         this.userUid = state.uid;
-
-        this.todoSubscription = this.firestore.collection<any>(
-          'todos').snapshotChanges().subscribe(data => {
-            this.todos = data
-              .map(e => {
-                return {
-                  id: e.payload.doc.id,
-                  ...e.payload.doc.data()
-                } as Todo;
-              })
-              .sort((a, b) => {
-                return a.dueDate > b.dueDate ? 1 : -1;
-              });
-          });
+        this.todos$ = firestore.collection<Todo>('todos', ref => ref.orderBy('dueDate')).valueChanges({idField: 'id'});
       } else {
-        if (this.todoSubscription) {
-          this.todoSubscription.unsubscribe();
-        }
-
         this.userUid = '';
-        this.todos = [];
+        this.todos$ = empty();
       }
     });
+  }
+
+  public getTodosFilterd(done: boolean): Observable<Todo[]>{
+    if (this.userUid != '') {
+      return this.firestore.collection<Todo>('todos').valueChanges({idField: 'id'}).pipe(map(t => {
+        return t.filter( t => { return (done === true && t.doneDate) || (done === false && !t.doneDate); });
+      }));
+    }
+    else
+    {
+      return empty();
+    }
   }
 
   public addTodo(subject: string, group: string, description: string, category: string, dueDate: Date): void {
@@ -56,6 +52,7 @@ export class TodoListService {
   }
 
   public toggleDoneStateById(todo: Todo): void {
-    this.firestore.doc('todos/' + todo.id).update({ doneDate: todo.doneDate ? null : new Date() });
+    if (todo.id)
+      this.firestore.doc('todos/' + todo.id).update({ doneDate: todo.doneDate ? null : new Date() });
   }
 }

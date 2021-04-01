@@ -16,7 +16,7 @@ export class DashboardComponent implements OnInit {
   public subject ='';
   public group ='';
   public category ='';
-  public displayedColumns = ['actions','todoDueDate','subject','group', 'category', 'todoDescription','deleteTodoById' ]
+  public displayedColumns = ['actions','todoDueDate','subject','group', 'category', 'todoDescription'] //,'deleteTodoById' ]
 
   constructor(public todoListService: TodoListService) {
   }
@@ -24,19 +24,19 @@ export class DashboardComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  getTodoPercentage(): number {
-    if (this.todoListService.todos.length) {
-      return this.todoListService.todos.filter(t => !t.doneDate).length / this.todoListService.todos.length * 100;
-    } else {
-      return 0;
-    }
-  }
+  // getTodoPercentage(): number {
+  //   if (this.todoListService.todos.length) {
+  //     return this.todoListService.todos.filter(t => !t.doneDate).length / this.todoListService.todos.length * 100;
+  //   } else {
+  //     return 0;
+  //   }
+  // }
 
-  getDonePercentage(): number {
-    if (this.todoListService.todos.length) {
-      return this.todoListService.todos.filter(t => t.doneDate).length / this.todoListService.todos.length * 100;
-    } else {
-      return 0;
-    }
-  }
+  // getDonePercentage(): number {
+  //   if (this.todoListService.todos.length) {
+  //     return this.todoListService.todos.filter(t => t.doneDate).length / this.todoListService.todos.length * 100;
+  //   } else {
+  //     return 0;
+  //   }
+  // }
 }
