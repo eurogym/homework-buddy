@@ -1,8 +1,8 @@
 import { AngularFireAuth } from '@angular/fire/auth';
-import { AngularFirestore } from '@angular/fire/firestore';
+import { AngularFirestore, combineChange } from '@angular/fire/firestore';
 import { Injectable } from '@angular/core';
-import { Observable, Subscription, empty, forkJoin, combineLatest } from 'rxjs';
-import { filter, map, switchMap } from 'rxjs/operators';
+import { Observable, Subscription, empty, forkJoin, combineLatest, merge } from 'rxjs';
+import { combineAll, filter, map, mapTo, switchMap } from 'rxjs/operators';
 import { Todo } from './todo';
 import { GruppeFB } from './gruppe-fb';
 import { GruppeFBListService } from './gruppe-fb-list.service';
@@ -18,20 +18,21 @@ export class TodoListService {
     this.afAuth.authState.subscribe(state => {
       if (state?.uid) {
         this.userUid = state.uid;
-        this.todos$ = firestore.collection<Todo>('todos', ref => ref.orderBy('dueDate'))
-          .valueChanges({idField: 'id'})
-          .pipe(
-            switchMap((tds: Todo[]) => forkJoin(tds.map((td: Todo) => {
-              return gruppenService.getGroupbyId('gruppen/' + td.id).pipe(
-                map(grp => {
-                  td.groupobj = grp;
-                  return td;
-                })
-              )
-            }
+        this.todos$ = firestore.collectionGroup<Todo>('todos', ref => ref.orderBy('dueDate')).valueChanges();
+        // this.todos$ = firestore.collection<Todo>('todos', ref => ref.orderBy('dueDate'))
+        //   .valueChanges()
+        //   .pipe(
+        //     switchMap((tds: Todo[]) => combineLatest(tds.map((td: Todo) => {
+        //       return gruppenService.getGroupbyId(td.id).pipe(
+        //         map(grp => {
+        //           td.groupobj = {id: td.group, Gruppenname: 'grp', Beschreibung: (grp ? grp?.Gruppenname : 'X')} ;
+        //           return td;
+        //         })
+        //       )
+        //     }
 
-            )))
-          );
+        //     )))
+        //   );
       } else {
         this.userUid = '';
         this.todos$ = empty();
@@ -41,7 +42,7 @@ export class TodoListService {
 
   public getTodosFilterd(done: boolean): Observable<Todo[]>{
     if (this.userUid != '') {
-      return this.firestore.collection<Todo>('todos').valueChanges({idField: 'id'}).pipe(map(t => {
+      return this.todos$.pipe(map(t => {
         return t.filter( t => { return (done === true && t.doneDate) || (done === false && !t.doneDate); });
       }));
     }

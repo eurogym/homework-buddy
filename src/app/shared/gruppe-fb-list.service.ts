@@ -5,6 +5,7 @@ import { empty, Observable, Subscription } from 'rxjs';
 import { Todo } from './todo';
 import { GruppeFB } from './gruppe-fb';
 import { GruppeComponent } from '../gruppe/gruppe.component';
+import { first } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -12,18 +13,18 @@ import { GruppeComponent } from '../gruppe/gruppe.component';
 export class GruppeFBListService {
   public gruppen$: Observable<GruppeFB[]> = empty();
 
-  private userUid = '';
+  private userId = '';
 
   constructor(public firestore: AngularFirestore, public afAuth: AngularFireAuth) {
     this.afAuth.authState.subscribe(state => {
       if (state?.uid) {
-        this.userUid = state.uid;
+        this.userId = state.uid;
         this.gruppen$ = firestore.collection<GruppeFB>('gruppen', ref => ref.orderBy('Gruppenname'))
           .valueChanges({IdField: 'id'});
 
       } else {
 
-        this.userUid = '';
+        this.userId = '';
         this.gruppen$ = empty();
       }
     });
@@ -36,16 +37,16 @@ export class GruppeFBListService {
   }
   public addGruppe(Gruppenname: string, Beschreibung: string): void {
     this.firestore.collection('gruppen').add
-    ({ Gruppenname:Gruppenname, Beschreibung:Beschreibung, userUid: this.userUid });
+    ({ Gruppenname:Gruppenname, Beschreibung:Beschreibung, userUid: this.userId });
   }
- 
+
   public deleteGruppeById(id: string): void {
     this.firestore.doc('gruppen/' + id).delete();
     }
-    
+
   public updateGruppeById(gruppen: GruppeFB): void {
       this.firestore.doc('gruppen/' + gruppen.id).update({ Gruppenname: gruppen.Gruppenname});
     }
-  
+
 }
 
