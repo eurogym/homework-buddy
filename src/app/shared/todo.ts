@@ -4,7 +4,7 @@ import { GruppeFB } from './gruppe-fb';
 export interface Todo {
     id: string;
     group: string;
-    groupobj: GruppeFB;
+    groupobj: (GruppeFB | undefined);
     subject: string;
     category: string;
     description: string;

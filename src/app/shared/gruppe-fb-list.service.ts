@@ -1,7 +1,7 @@
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Injectable } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { empty, Observable, Subscription } from 'rxjs';
 import { Todo } from './todo';
 import { GruppeFB } from './gruppe-fb';
 import { GruppeComponent } from '../gruppe/gruppe.component';
@@ -10,37 +10,30 @@ import { GruppeComponent } from '../gruppe/gruppe.component';
   providedIn: 'root'
 })
 export class GruppeFBListService {
-  public gruppen: GruppeFB[] = [];
+  public gruppen$: Observable<GruppeFB[]> = empty();
 
   private userUid = '';
-  private GruppenSubscription: Subscription = Subscription.EMPTY;
 
   constructor(public firestore: AngularFirestore, public afAuth: AngularFireAuth) {
     this.afAuth.authState.subscribe(state => {
       if (state?.uid) {
         this.userUid = state.uid;
+        this.gruppen$ = firestore.collection<GruppeFB>('gruppen', ref => ref.orderBy('Gruppenname'))
+          .valueChanges({IdField: 'id'});
 
-        this.GruppenSubscription = this.firestore.collection<any>(
-          'gruppen').snapshotChanges().subscribe(data => {
-            this.gruppen = data
-              .map(e => {
-                return {
-                  id: e.payload.doc.id,
-                  ...e.payload.doc.data()
-                } as GruppeFB;
-              })
-          });
       } else {
-        if (this.GruppenSubscription) {
-          this.GruppenSubscription.unsubscribe();
-        }
 
         this.userUid = '';
-        this.gruppen = [];
+        this.gruppen$ = empty();
       }
     });
   }
 
+
+
+  public getGroupbyId(grpId: string): Observable<GruppeFB | undefined>{
+    return this.firestore.doc<GruppeFB>('gruppen/' + grpId).valueChanges();
+  }
   public addGruppe(Gruppenname: string, Beschreibung: string): void {
     this.firestore.collection('gruppen').add
     ({ Gruppenname:Gruppenname, Beschreibung:Beschreibung, userUid: this.userUid });
@@ -54,10 +47,5 @@ export class GruppeFBListService {
       this.firestore.doc('gruppen/' + gruppen.id).update({ Gruppenname: gruppen.Gruppenname});
     }
   
-    /**
-  public toggleDoneStateById(Gruppen: gruppe): void {
-      this.firestore.doc('gruppe/' + todo.id).update({ doneDate: todo.doneDate ? null : new Date() });
-    }
-    */
 }
 

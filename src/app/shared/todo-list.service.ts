@@ -1,24 +1,37 @@
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Injectable } from '@angular/core';
-import { Observable, Subscription, empty } from 'rxjs';
+import { Observable, Subscription, empty, forkJoin, combineLatest } from 'rxjs';
 import { filter, map, switchMap } from 'rxjs/operators';
 import { Todo } from './todo';
 import { GruppeFB } from './gruppe-fb';
+import { GruppeFBListService } from './gruppe-fb-list.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TodoListService {
-  public todos$: Observable<Todo[]>;
+  public todos$: Observable<Todo[]> = empty();
   private userUid = '';
 
-  constructor(public firestore: AngularFirestore, public afAuth: AngularFireAuth) {
-    this.todos$ = empty();
+  constructor(public firestore: AngularFirestore, public afAuth: AngularFireAuth, private gruppenService: GruppeFBListService) {
     this.afAuth.authState.subscribe(state => {
       if (state?.uid) {
         this.userUid = state.uid;
-        this.todos$ = firestore.collection<Todo>('todos', ref => ref.orderBy('dueDate')).valueChanges({idField: 'id'});
+        this.todos$ = firestore.collection<Todo>('todos', ref => ref.orderBy('dueDate'))
+          .valueChanges({idField: 'id'})
+          .pipe(
+            switchMap((tds: Todo[]) => forkJoin(tds.map((td: Todo) => {
+              return gruppenService.getGroupbyId('gruppen/' + td.id).pipe(
+                map(grp => {
+                  td.groupobj = grp;
+                  return td;
+                })
+              )
+            }
+
+            )))
+          );
       } else {
         this.userUid = '';
         this.todos$ = empty();
