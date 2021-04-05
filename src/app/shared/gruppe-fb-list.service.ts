@@ -5,7 +5,7 @@ import { empty, Observable, Subscription } from 'rxjs';
 import { Todo } from './todo';
 import { GruppeFB } from './gruppe-fb';
 import { GruppeComponent } from '../gruppe/gruppe.component';
-import { first } from 'rxjs/operators';
+import { filter, first } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -32,8 +32,10 @@ export class GruppeFBListService {
 
 
 
-  public getGroupbyId(grpId: string): Observable<GruppeFB | undefined>{
-    return this.firestore.doc<GruppeFB>('gruppen/' + grpId).valueChanges();
+  public getGroupbyId(grpId: string): Observable<GruppeFB[]>{
+    // return this.firestore.doc<GruppeFB>('gruppen/' + grpId).valueChanges();
+    return this.firestore.collection<GruppeFB>('gruppen', ref => ref.where('id', '==', grpId).orderBy('Gruppenname'))
+      .valueChanges({IdField: 'id'});
   }
   public addGruppe(Gruppenname: string, Beschreibung: string): void {
     this.firestore.collection('gruppen').add
