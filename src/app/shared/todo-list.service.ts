@@ -1,45 +1,44 @@
 import { AngularFireAuth } from '@angular/fire/auth';
-import { AngularFirestore } from '@angular/fire/firestore';
+import { AngularFirestore, combineChange } from '@angular/fire/firestore';
 import { Injectable } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription, empty, forkJoin, combineLatest, merge } from 'rxjs';
+import { combineAll, exhaustMap, filter, map, mapTo, switchMap } from 'rxjs/operators';
 import { Todo } from './todo';
+import { GruppeFB } from './gruppe-fb';
+import { GruppeFBListService } from './gruppe-fb-list.service';
+import { leftJoinDocument } from './helpers/database-joins';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TodoListService {
-  public todos: Todo[] = [];
-
+  public todos$: Observable<any> = empty();
   private userUid = '';
-  private todoSubscription: Subscription = Subscription.EMPTY;
 
-  constructor(public firestore: AngularFirestore, public afAuth: AngularFireAuth) {
+  constructor(public firestore: AngularFirestore, public afAuth: AngularFireAuth, private gruppenService: GruppeFBListService) {
     this.afAuth.authState.subscribe(state => {
       if (state?.uid) {
         this.userUid = state.uid;
+        this.todos$ = firestore.collection<Todo>('todos', ref => ref.orderBy('dueDate'))
+          .valueChanges({idField: 'id'}).pipe(leftJoinDocument(firestore, 'group', 'gruppen', 'groupobj'));
 
-        this.todoSubscription = this.firestore.collection<any>(
-          'todos').snapshotChanges().subscribe(data => {
-            this.todos = data
-              .map(e => {
-                return {
-                  id: e.payload.doc.id,
-                  ...e.payload.doc.data()
-                } as Todo;
-              })
-              .sort((a, b) => {
-                return a.dueDate > b.dueDate ? 1 : -1;
-              });
-          });
       } else {
-        if (this.todoSubscription) {
-          this.todoSubscription.unsubscribe();
-        }
-
         this.userUid = '';
-        this.todos = [];
+        this.todos$ = empty();
       }
     });
+  }
+
+  public getTodosFilterd(done: boolean): Observable<Todo[]>{
+    if (this.userUid != '') {
+      return this.todos$.pipe(map(t => {
+        return t.filter( (t: any) => { return (done === true && t.doneDate) || (done === false && !t.doneDate); });
+      }));
+    }
+    else
+    {
+      return empty();
+    }
   }
 
   public addTodo(subject: string, group: string, description: string, category: string, dueDate: Date): void {
@@ -56,6 +55,7 @@ export class TodoListService {
   }
 
   public toggleDoneStateById(todo: Todo): void {
-    this.firestore.doc('todos/' + todo.id).update({ doneDate: todo.doneDate ? null : new Date() });
+    if (todo.id)
+      this.firestore.doc('todos/' + todo.id).update({ doneDate: todo.doneDate ? null : new Date() });
   }
 }

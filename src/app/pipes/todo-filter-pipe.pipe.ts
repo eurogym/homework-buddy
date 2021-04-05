@@ -1,4 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 import { Todo } from '../shared/todo';
 
@@ -7,7 +9,7 @@ import { Todo } from '../shared/todo';
 })
 export class TodoFilterPipePipe implements PipeTransform {
 
-  transform(todos: Todo[], done: boolean | null): Todo[] {
-    return todos.filter(t => done === null || done === undefined || (done === true && t.doneDate) || (done === false && !t.doneDate));
+  transform(todos: Observable<Todo[]>, done: boolean | null): Observable<Todo[]> {
+    return todos.pipe(map(t => {  return t.filter( t => { return (done === true && t.doneDate) || (done === false && !t.doneDate); });}))
   }
 }

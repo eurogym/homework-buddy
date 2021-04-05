@@ -6,7 +6,7 @@
     Gruppenname: <input type="text" [(ngModel)]="Gruppenname">
     Beschreibung: <input type="text" [(ngModel)]="Beschreibung"> <br/>
     <button (click)="addGruppe()">Hinzufügen</button>
-    
+
 </div>
 
 <table>
@@ -14,7 +14,7 @@
         &nbsp; <th>Gruppenname</th>
         <th>Beschreibung</th>
     </tr>
-    <tr *ngFor="let item of (GruppenListService.gruppen)">
+    <tr *ngFor="let item of GruppenListService.gruppen$ | async">
         <button (click)="GruppenListService.deleteGruppeById(item.id)">Löschen</button>
             <td class="Gruppenname">{{ item.Gruppenname }}</td>
             <td class="Beschreibung">{{ item.Beschreibung }}</td>
