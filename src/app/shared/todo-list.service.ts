@@ -19,8 +19,8 @@ export class TodoListService {
     this.afAuth.authState.subscribe(state => {
       if (state?.uid) {
         this.userUid = state.uid;
-        this.todos$ = firestore.collectionGroup<Todo>('todos', ref => ref.orderBy('dueDate'))
-          .valueChanges().pipe(leftJoinDocument(firestore, 'group', 'gruppen', 'groupobj'));
+        this.todos$ = firestore.collection<Todo>('todos', ref => ref.orderBy('dueDate'))
+          .valueChanges({idField: 'id'}).pipe(leftJoinDocument(firestore, 'group', 'gruppen', 'groupobj'));
 
       } else {
         this.userUid = '';
