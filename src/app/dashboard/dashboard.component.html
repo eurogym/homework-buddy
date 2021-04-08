@@ -1,5 +1,4 @@
 <h2>Dashboard</h2>
-
 <!--  Neue Tabelle -->
 <table mat-table [dataSource]="(todoListService.todos$ | todoFilterPipe: (false))" class="mat-elevation-z8">
 
@@ -25,7 +24,7 @@
     <!-- group Column -->
     <ng-container matColumnDef="group">
       <th mat-header-cell *matHeaderCellDef> Gruppe</th>
-      <td mat-cell *matCellDef="let element"> {{element.groupobj.Gruppenname}} </td>
+      <td mat-cell *matCellDef="let element"> {{element.groupobj?.Gruppenname}} </td>
     </ng-container>
 
     <!-- Description Column -->
@@ -83,7 +82,7 @@
   <!-- group Column -->
   <ng-container matColumnDef="group">
     <th mat-header-cell *matHeaderCellDef> Gruppe </th>
-    <td mat-cell *matCellDef="let element"> {{element.groupobj.Gruppenname}} </td>
+    <td mat-cell *matCellDef="let element"> {{element.groupobj?.Gruppenname}} </td>
   </ng-container>
 
   <!-- Description Column -->
