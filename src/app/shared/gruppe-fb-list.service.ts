@@ -20,7 +20,7 @@ export class GruppeFBListService {
       if (state?.uid) {
         this.userId = state.uid;
         this.gruppen$ = firestore.collection<GruppeFB>('gruppen', ref => ref.orderBy('Gruppenname'))
-          .valueChanges({IdField: 'id'});
+          .valueChanges({idField: 'id'});
 
       } else {
 
