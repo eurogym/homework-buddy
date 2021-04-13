@@ -11,6 +11,8 @@ export class GruppeComponent implements OnInit {
 
   public Gruppenname = '';
   public Beschreibung = '';
+  public displayedColumns = ['Löschen', 'groupName', 'groupDescription'];
+
 
   constructor(public GruppenListService: GruppeFBListService) {
   }
