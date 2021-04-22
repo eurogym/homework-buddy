@@ -17,6 +17,7 @@ import { TodoFilterPipePipe } from './pipes/todo-filter-pipe.pipe';
 
 import {MatTableModule, _MatTableDataSource} from '@angular/material/table';
 import {MatButtonModule} from '@angular/material/button';
+import { FaecherComponent } from './add-faecher/addFaecher.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import {MatButtonModule} from '@angular/material/button';
     TodoListComponent,
     DashboardComponent,
     TodoFilterPipePipe,
-    GruppeComponent
+    GruppeComponent,
+    FaecherComponent
   ],
   imports: [
     BrowserModule,
