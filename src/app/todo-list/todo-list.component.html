@@ -1,7 +1,4 @@
-<h2>Todos</h2>
-
 <div class="addItem">
-
   <!-- Fach -->
   <label for="subject">Wähle ein Fach aus:</label>
   <select id="subject" name="subject" [(ngModel)]="subject">
@@ -17,13 +14,11 @@
     <option value="Religion">Religion</option>
     <option value="Zeichnen">Zeichnen</option>
   </select> <br/>
-
+  
   <!-- Gruppe -->
   <label for="gruppen">Wähle eine Gruppe aus:</label>
   <select id="gruppen" name="gruppen" [(ngModel)]="group">
-
     <option *ngFor="let item of (GruppenFBListservice.gruppen$ | async)" [value]="item.id">{{item.Gruppenname}}</option>
-
   </select> <br/>
 
   <!-- Kategorie -->

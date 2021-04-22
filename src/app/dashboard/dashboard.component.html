@@ -1,41 +1,50 @@
 <h2>Dashboard</h2>
+
+<div class='create'>
+  <button mat-raised-button (click)="onCreate">
+    <mat-icon>add</mat-icon>create
+  </button>
+</div>
 <!--  Neue Tabelle -->
-<table mat-table [dataSource]="(todoListService.todos$ | todoFilterPipe: (false))" class="mat-elevation-z8">
+<table mat-table [dataSource]="(todoListService.todos$ | todoFilterPipe: (false))" class="mat-elevation-z8" matSort >
 
     <!-- Toggle Done Column-->
     <ng-container matColumnDef="actions">
-      <th mat-header-cell  *matHeaderCellDef > Status </th>
+      <th mat-header-cell  *matHeaderCellDef mat-sort-header> Status </th>
       <td mat-cell *matCellDef="let element" >
-        <button mat-button (click)="todoListService.toggleDoneStateById(element)"><div *ngIf="!element.doneDate">Done</div><div *ngIf="element.doneDate">Undo</div></button>
+        <button mat-button (click)="todoListService.toggleDoneStateById(element)">
+          <div *ngIf="!element.doneDate">Done</div>
+          <div *ngIf="element.doneDate">Undo</div></button>
+        <button mat-icon-button color="warn"><mat-icon>launch</mat-icon></button>
     </ng-container>
 
      <!-- TodoDueDate Column -->
      <ng-container matColumnDef="todoDueDate">
-      <th mat-header-cell *matHeaderCellDef> Fälligkeitsdatum</th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Fälligkeitsdatum</th>
       <td mat-cell *matCellDef="let element"> {{element.dueDate.seconds * 1000 | date:'EE, dd.MM.'}} </td>
     </ng-container>
 
     <!-- subject Column -->
     <ng-container matColumnDef="subject">
-      <th mat-header-cell *matHeaderCellDef> Fach </th>
-      <td mat-cell *matCellDef="let element"> {{element.subject}} </td>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Fach </th>
+      <td mat-cell *matCellDef="let element"> {{element.subject}}</td>
     </ng-container>
 
     <!-- group Column -->
     <ng-container matColumnDef="group">
-      <th mat-header-cell *matHeaderCellDef> Gruppe</th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Gruppe</th>
       <td mat-cell *matCellDef="let element"> {{element.groupobj?.Gruppenname}} </td>
     </ng-container>
 
     <!-- Description Column -->
     <ng-container matColumnDef="category">
-      <th mat-header-cell *matHeaderCellDef> Kategorie </th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Kategorie </th>
       <td mat-cell *matCellDef="let element"> {{element.category}} </td>
     </ng-container>
 
     <!-- Symbol Column -->
     <ng-container matColumnDef="todoDescription">
-      <th mat-header-cell *matHeaderCellDef> Beschreibung </th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Beschreibung </th>
       <td mat-cell *matCellDef="let element"> {{element.description}} </td>
     </ng-container>
 
@@ -52,7 +61,6 @@
         (click)="todoListService.toggleDoneStateById(row.id)">
     </tr>
   </table>
-
   <br>
   <br>
   <br>
