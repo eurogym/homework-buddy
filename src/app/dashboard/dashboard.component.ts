@@ -32,7 +32,7 @@ export class DashboardComponent implements OnInit {
   ngOnInit(): void {
   }
   
-onCreate(){
+public onCreate(){
   this.dialog.open(TodoListComponent);
 }
 
