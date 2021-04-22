@@ -1,9 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { AngularFireAuth } from '@angular/fire/auth';
+import { AngularFirestore, combineChange } from '@angular/fire/firestore';
+
+import { Component, OnInit, ViewChild } from '@angular/core'; 
 
 import { Todo } from '../shared/todo';
 import { TodoListService } from '../shared/todo-list.service';
 import { formatDate } from '@angular/common';
 import { GruppeFBListService } from '../shared/gruppe-fb-list.service';
+import {MatDialog, MatDialogConfig} from "@angular/material/dialog"
+import { TodoListComponent } from '../todo-list/todo-list.component';
 
 @Component({
   selector: 'app-dashboard',
@@ -17,13 +22,19 @@ export class DashboardComponent implements OnInit {
   public subject ='';
   public group ='';
   public category ='';
-  public displayedColumns = ['actions','todoDueDate','subject','group', 'category', 'todoDescription'] //,'deleteTodoById' ]
+  public displayedColumns = ['actions','todoDueDate','subject','group', 'category', 'todoDescription',] //,'deleteTodoById' ]
 
-  constructor(public todoListService: TodoListService, public grpService: GruppeFBListService) {
+  
+  constructor( public todoListService: TodoListService, public grpService: GruppeFBListService,
+    private dialog: MatDialog ) {
   }
 
   ngOnInit(): void {
   }
+  
+onCreate(){
+  this.dialog.open(TodoListComponent);
+}
 
   // getTodoPercentage(): number {
   //   if (this.todoListService.todos.length) {
