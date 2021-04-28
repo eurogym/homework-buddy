@@ -36,13 +36,15 @@
 
 <!--<table>
     <tr>
-        &nbsp; <th>Gruppenname</th>
-        <th>Beschreibung</th>
+      &nbsp; <th>Gruppenname</th>
+      <th>Beschreibung</th>
     </tr>
     <tr *ngFor="let item of GruppenListService.gruppen$ | async">
-        <button (click)="GruppenListService.deleteGruppeById(item.id)">Löschen</button>
-            <td class="Gruppenname">{{ item.Gruppenname }}</td>
-            <td class="Beschreibung">{{ item.Beschreibung }}</td>
+      <button (click)="GruppenListService.deleteGruppeById(item.id)">Löschen</button>
+      <button (click)="usrService.addUser2Group(item.id)">Add To User</button>
+      <button (click)="usrService.remUserGroup(item.id)">Remove User</button>
+      <td class="Gruppenname">{{ item.Gruppenname }}</td>
+      <td class="Beschreibung">{{ item.Beschreibung }}</td>
     </tr>
 </table>-->
 
