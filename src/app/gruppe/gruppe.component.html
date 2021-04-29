@@ -16,6 +16,8 @@
     <th mat-header-cell  *matHeaderCellDef >Löschen</th>
     <td mat-cell *matCellDef="let element" >
       <button mat-button (click)="GruppenListService.deleteGruppeById(element.id)">Löschen</button>
+      <button mat-button (click)="usrService.addUser2Group(element.id)">Hinzufügen</button>
+      <button mat-button (click)="usrService.remUserGroup(element.id)">Entfernen</button>
   </ng-container>
     
     <!--groupName column-->
