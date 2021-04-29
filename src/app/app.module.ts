@@ -17,6 +17,8 @@ import { TodoFilterPipePipe } from './pipes/todo-filter-pipe.pipe';
 
 import {MatTableModule, _MatTableDataSource} from '@angular/material/table';
 import {MatButtonModule} from '@angular/material/button';
+import {MatInputModule} from '@angular/material/input'; 
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; 
 
 @NgModule({
   declarations: [
@@ -35,6 +37,8 @@ import {MatButtonModule} from '@angular/material/button';
     AngularFireAuthModule,
     MatTableModule,
     MatButtonModule,
+    MatInputModule,
+    BrowserAnimationsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

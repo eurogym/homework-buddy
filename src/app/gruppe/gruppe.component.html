@@ -1,12 +1,18 @@
 <h2>Gruppe</h2>
 
+
 <div class="addItem">
+  <mat-form-field class="Gruppenname">
+    <mat-label>Gruppenname</mat-label>
+    <input matInput type="text" [(ngModel)]="Gruppenname">
+  </mat-form-field>
 
-    <label for="Gruppenname">neue Gruppe erstellen:</label> &nbsp;
-    Gruppenname: <input type="text" [(ngModel)]="Gruppenname">
-    Beschreibung: <input type="text" [(ngModel)]="Beschreibung"> <br/>
-    <button (click)="addGruppe()">Hinzufügen</button>
-
+  <mat-form-field class="Beschreibung">
+    <mat-label>Beschreibung</mat-label>
+    <textarea matInput type="text" [(ngModel)]="Beschreibung"></textarea>
+  </mat-form-field>
+  
+  <button mat-button (click)="addGruppe()">Hinzufügen</button>
 </div>
 
 <table>
@@ -20,4 +26,3 @@
             <td class="Beschreibung">{{ item.Beschreibung }}</td>
     </tr>
 </table>
-
