@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { GruppeFBListService} from '../shared/gruppe-fb-list.service';
+import { UserService } from '../shared/user.service';
 
 @Component({
   selector: 'app-gruppe',
@@ -11,14 +12,16 @@ export class GruppeComponent implements OnInit {
 
   public Gruppenname = '';
   public Beschreibung = '';
+  public displayedColumns = ['Löschen', 'groupName', 'groupDescription'];
 
-  constructor(public GruppenListService: GruppeFBListService) {
+
+  constructor(public GruppenListService: GruppeFBListService, public usrService: UserService) {
   }
 
   ngOnInit(): void {
   }
   public addGruppe(): void {
-  
+
     if (this.Gruppenname ) {
       this.GruppenListService.addGruppe(this.Gruppenname, this.Beschreibung);
       this.Gruppenname = '';

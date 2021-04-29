@@ -20,13 +20,24 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatInputModule} from '@angular/material/input'; 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; 
 
+import { FaecherComponent } from './add-faecher/addFaecher.component';
+
+import {MatFormFieldModule} from '@angular/material/form-field';
+
+import {MatIconModule} from '@angular/material/icon';
+import {NoopAnimationsModule } from '@angular/platform-browser/animations';
+import {MatSortModule} from '@angular/material/sort';
+import {MatPaginatorModule} from '@angular/material/paginator';
+import {MatDialogModule} from '@angular/material/dialog';
+
 @NgModule({
   declarations: [
     AppComponent,
     TodoListComponent,
     DashboardComponent,
     TodoFilterPipePipe,
-    GruppeComponent
+    GruppeComponent,
+    FaecherComponent
   ],
   imports: [
     BrowserModule,
@@ -39,8 +50,17 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     MatButtonModule,
     MatInputModule,
     BrowserAnimationsModule,
+    MatFormFieldModule,
+    NoopAnimationsModule,
+    MatIconModule,
+    MatSortModule,
+    MatPaginatorModule,
+    MatDialogModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents:[TodoListComponent]
 })
-export class AppModule { }
+export class AppModule { 
+  
+}

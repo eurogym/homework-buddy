@@ -1,0 +1,47 @@
+<h2>Fächer Hinzufügen</h2>
+
+<div class="addItem">
+
+    <label for="Fachname">neues Fach erstellen:</label> &nbsp;
+    Fachname: <input type="text" [(ngModel)]="Fachname">
+    Fachbeschreibung: <input type="text" [(ngModel)]="Fachbeschreibung"> <br/>
+    <button (click)="addFach()">Hinzufügen</button>
+
+</div>
+
+<table mat-table [dataSource]="(FaecherService.fach$)" class="mat-elevation-z8">
+
+
+  <ng-container matColumnDef="Löschen">
+    <th mat-header-cell  *matHeaderCellDef >Löschen</th>
+    <td mat-cell *matCellDef="let element" >
+      <button mat-button (click)="FaecherService.deleteFachById(element.id)">Löschen</button>
+  </ng-container>
+
+
+    <ng-container matColumnDef="Fachname">
+        <th mat-header-cell *matHeaderCellDef> Fachname</th>
+        <td mat-cell *matCellDef="let element"> {{element.Fachname}} </td>
+      </ng-container>
+
+
+      <ng-container matColumnDef="Fachbeschreibung">
+        <th mat-header-cell *matHeaderCellDef>Beschreibung</th>
+        <td mat-cell *matCellDef="let element"> {{element.Fachbeschreibung}} </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+</table>
+
+<!--<table>
+    <tr>
+        &nbsp; <th>Fachname</th>
+        <th>Fachbeschreibung</th>
+    </tr>
+    <tr *ngFor="let item of addFächerListService.fach | async">
+        <button (click)="FächerListService.deleteFachById(item.id)">Löschen</button>
+            <td class="Fachname">{{ item.Fachname }}</td>
+            <td class="Fachbeschreibung">{{ item.Fachbeschreibung }}</td>
+    </tr>
+</table>-->
