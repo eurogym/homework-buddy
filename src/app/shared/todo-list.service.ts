@@ -7,19 +7,20 @@ import { Todo } from './todo';
 import { GruppeFB } from './gruppe-fb';
 import { GruppeFBListService } from './gruppe-fb-list.service';
 import { leftJoinDocument } from './helpers/database-joins';
+import { UserService } from './user.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TodoListService {
-  public todos$: Observable<any> = empty();
+  public todos$: Observable<Todo[]> = empty();
   private userUid = '';
 
-  constructor(public firestore: AngularFirestore, public afAuth: AngularFireAuth, private gruppenService: GruppeFBListService) {
+  constructor(public firestore: AngularFirestore, public afAuth: AngularFireAuth, private gruppenService: GruppeFBListService, public usrService: UserService) {
     this.afAuth.authState.subscribe(state => {
       if (state?.uid) {
         this.userUid = state.uid;
-        this.todos$ = firestore.collection<Todo>('todos', ref => ref.orderBy('dueDate'))
+        this.todos$ = firestore.collection<Todo>('todos', ref => ref.orderBy('dueDate'))//.where('group', 'in', this.usrService.memberGroupsArr))
           .valueChanges({idField: 'id'}).pipe(leftJoinDocument(firestore, 'group', 'gruppen', 'groupobj'));
 
       } else {
@@ -57,5 +58,11 @@ export class TodoListService {
   public toggleDoneStateById(todo: Todo): void {
     if (todo.id)
       this.firestore.doc('todos/' + todo.id).update({ doneDate: todo.doneDate ? null : new Date() });
+  }
+
+  public toggleDoneStateById4User(todo: Todo): void {
+    if (todo.id){
+      this.firestore.doc('todos/' + todo.id).update({ doneDate: todo.doneDate ? null : new Date() });
+    }
   }
 }
