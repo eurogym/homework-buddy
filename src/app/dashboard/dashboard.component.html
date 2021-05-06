@@ -64,7 +64,7 @@
   <br>
   <br>
   <br>
-
+  <p>Done anzeigen: <input type="checkbox" [(ngModel)]="showDone"></p>
 <!--  Neue Tabelle -->
 <table mat-table [dataSource]="(todoListService.todos$ | todoFilterPipe: (true))" class="mat-elevation-z8">
 
@@ -119,5 +119,5 @@
   </tr>
 </table>
 
-  <p>Done anzeigen: <input type="checkbox" [(ngModel)]="showDone"></p>
+
 
