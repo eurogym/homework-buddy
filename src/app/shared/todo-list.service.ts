@@ -59,4 +59,10 @@ export class TodoListService {
     if (todo.id)
       this.firestore.doc('todos/' + todo.id).update({ doneDate: todo.doneDate ? null : new Date() });
   }
+
+  public toggleDoneStateById4User(todo: Todo): void {
+    if (todo.id){
+      this.firestore.doc('todos/' + todo.id).update({ doneDate: todo.doneDate ? null : new Date() });
+    }
+  }
 }
