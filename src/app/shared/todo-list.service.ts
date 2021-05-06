@@ -60,9 +60,23 @@ export class TodoListService {
       this.firestore.doc('todos/' + todo.id).update({ doneDate: todo.doneDate ? null : new Date() });
   }
 
-  public toggleDoneStateById4User(todo: Todo): void {
-    if (todo.id){
-      this.firestore.doc('todos/' + todo.id).update({ doneDate: todo.doneDate ? null : new Date() });
+
+   public toggleDoneStateById4User(todo: Todo): void {
+     if (todo.id){
+       let userArray: string [];
+       let todoobj = this.firestore.doc('todos/' + todo.id);
+       todoobj.ref.get().then((doc)=>{
+        if(doc.exists){
+          let todoDb = doc.data();
+          userArray = todoDb?.doneByUser;
+          if(!userArray) userArray = [];
+          if(userArray.indexOf(this.userUid)===-1){
+            userArray.push(this.userUid);
+            this.firestore.doc('todos/' + todo.id).update({ doneByUser: userArray});
+
+          }
+        }
+       });
     }
   }
 }

@@ -10,4 +10,6 @@ export interface Todo {
     description: string;
     dueDate: firestore.firestore.Timestamp;
     doneDate?: firestore.firestore.Timestamp;
+    doneByUser: string[];
+
   }
