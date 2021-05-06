@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { TodoListService } from '../shared/todo-list.service';
 import { formatDate } from '@angular/common';
 import { GruppeFBListService } from '../shared/gruppe-fb-list.service';
+import {addFaecherListService } from '../shared/addFaecher.service';
 
 @Component({
   selector: 'app-todo-list',
@@ -19,7 +20,7 @@ export class TodoListComponent implements OnInit {
   public displayedColumns = ['actions','todoDueDate','subject','group', 'category', 'todoDescription','deleteTodoById' ]
 
 
-  constructor(public todoListService: TodoListService, public GruppenFBListservice: GruppeFBListService) {
+  constructor(public todoListService: TodoListService, public GruppenFBListservice: GruppeFBListService, public addFaecherListService: addFaecherListService) {
   }
 
   ngOnInit(): void {

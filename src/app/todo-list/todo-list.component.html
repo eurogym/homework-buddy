@@ -2,17 +2,7 @@
   <!-- Fach -->
   <label for="subject">Wähle ein Fach aus:</label>
   <select id="subject" name="subject" [(ngModel)]="subject">
-    <option value="Mathe">Mathematik</option>
-    <option value="Französisch">Französisch</option>
-    <option value="Englisch">Englisch</option>
-    <option value="Spanisch">Spanisch</option>
-    <option value="Latein">Latein</option>
-    <option value="PuP">Psychologie & Philosophie</option>
-    <option value="Biologie">Biologie</option>
-    <option value="Geschichte">Geschichte</option>
-    <option value="Geographie">Geographie</option>
-    <option value="Religion">Religion</option>
-    <option value="Zeichnen">Zeichnen</option>
+    <option *ngFor="let item of (addFaecherListService.fach$ | async)" [value]="item.id">{{item.Fachname}}</option>
   </select> <br/>
   
   <!-- Gruppe -->
