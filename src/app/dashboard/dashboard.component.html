@@ -12,9 +12,7 @@
     <ng-container matColumnDef="actions">
       <th mat-header-cell  *matHeaderCellDef mat-sort-header> Status </th>
       <td mat-cell *matCellDef="let element" >
-        <button mat-button (click)="todoListService.toggleDoneStateById4User(element)">
-          <div *ngIf="!element.doneDate">Done</div>
-          <div *ngIf="element.doneDate">Undo</div></button>
+        <button mat-button (click)="todoListService.toggleDoneStateById4User(element)">Done</button>
         <button mat-icon-button color="warn"><mat-icon>launch</mat-icon></button>
     </ng-container>
 
@@ -72,7 +70,7 @@
   <ng-container matColumnDef="actions">
     <th mat-header-cell  *matHeaderCellDef > Status </th>
     <td mat-cell *matCellDef="let element" >
-      <button mat-button (click)="todoListService.toggleDoneStateById4User(element)"><div *ngIf="!element.doneDate">Done</div><div *ngIf="element.doneDate">Undo</div></button>
+      <button mat-button (click)="todoListService.toggleDoneStateById4User(element)">Undo</button>
   </ng-container>
 
    <!-- TodoDueDate Column -->

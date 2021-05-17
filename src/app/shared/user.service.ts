@@ -11,6 +11,7 @@ import { appuser } from './AppUser';
 export class UserService {
 
   public memberGroupsArr: string[] = [];
+  public UserId: string = "";
   public currentUser$:Observable<appuser | undefined> = empty();
   constructor(public db: AngularFirestore, public afAuth: AngularFireAuth) {
     this.getUser();
@@ -24,6 +25,7 @@ export class UserService {
         this.currentUser$.subscribe(u => {
           if (u?.memberingroups)
             this.memberGroupsArr = u?.memberingroups;
+            this.UserId = (u ? u.uid : "");
           return u;
         });
       } else {
@@ -39,7 +41,6 @@ export class UserService {
         this.db.collection('users').doc(uid).set({ uid: uid, displayName: displayName, email: email, memberingroups: []});
       }
     });
-
   }
 
   public addUser2Group(groupId: string): void{

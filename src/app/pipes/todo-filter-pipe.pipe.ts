@@ -18,14 +18,11 @@ export class TodoFilterPipePipe implements PipeTransform {
 
 
   transform(todos: Observable<Todo[]>, done: boolean | null): Observable<Todo[]> {
-    //var heute = Date.now();
-    //var abgabedatum = Date.parse()/1000;
 
-
-
-
-
-    return todos.pipe(map(t => {  return t.filter( t => { return ((done === true && t.doneDate) || (done === false && !t.doneDate)) && (this.usrService.memberGroupsArr.indexOf(t.group) != -1) //&& (t.dueDate >= heute);
-    });}))
+    return todos.pipe(map(t => {  
+      return t.filter( t => { 
+        return ((done === true && (t.doneByUser?.indexOf(this.usrService.UserId) !== -1)) || (done === false &&  ((!t.doneByUser) || t.doneByUser?.indexOf(this.usrService.UserId) === -1))) && (this.usrService.memberGroupsArr.indexOf(t.group) === -1)
+      });
+    }))
   }
 }
