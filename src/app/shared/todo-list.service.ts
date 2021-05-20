@@ -63,8 +63,12 @@ export class TodoListService {
 
   public toggleDoneStateById4User(todo: Todo): void {
     if (todo.id){
-      if (!todo.doneByUser || todo.doneByUser.indexOf(this.usrService.UserId) === -1){
-      todo.doneByUser.push(this.usrService.UserId);
+      if (!todo.doneByUser)
+      {
+        todo.doneByUser = [];
+      }
+      if (todo.doneByUser.indexOf(this.usrService.UserId) === -1){
+        todo.doneByUser.push(this.usrService.UserId);
       }
       else
       {
