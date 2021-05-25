@@ -21,7 +21,7 @@ export class TodoListService {
       if (state?.uid) {
         this.userUid = state.uid;
         this.todos$ = firestore.collection<Todo>('todos', ref => ref.orderBy('dueDate'))//.where('group', 'in', this.usrService.memberGroupsArr))
-          .valueChanges({idField: 'id'}).pipe(leftJoinDocument(firestore, 'group', 'gruppen', 'groupobj'));
+          .valueChanges({idField: 'id'}).pipe(leftJoinDocument(firestore, 'group', 'gruppen', 'groupobj'), leftJoinDocument(firestore, 'subject', 'fach', 'subjectobj'));
 
       } else {
         this.userUid = '';

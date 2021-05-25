@@ -6,6 +6,7 @@ export interface Todo {
     group: string;
     groupobj: any;
     subject: string;
+    subjectobj: any;
     category: string;
     description: string;
     dueDate: firestore.firestore.Timestamp;
