@@ -9,9 +9,9 @@
 
   <mat-form-field class="Beschreibung">
     <mat-label>Beschreibung</mat-label>
-    <textarea matInput type="text" [(ngModel)]="Beschreibung"></textarea>
+    <input matInput type="text" [(ngModel)]="Beschreibung">
   </mat-form-field>
-  
+
   <button mat-button (click)="addGruppe()">Hinzufügen</button>
 </div>
 
@@ -21,11 +21,11 @@
   <ng-container matColumnDef="Löschen">
     <th mat-header-cell  *matHeaderCellDef >Löschen</th>
     <td mat-cell *matCellDef="let element" >
-      <button mat-button (click)="GruppenListService.deleteGruppeById(element.id)">Löschen</button>
+      <div *ngIf="element.userUid === usrService.UserId"><button mat-button (click)="GruppenListService.deleteGruppeById(element.id)">Löschen</button></div>
       <button mat-button (click)="usrService.addUser2Group(element.id)">Beitreten</button>
       <button mat-button (click)="usrService.remUserGroup(element.id)">Verlassen</button>
   </ng-container>
-    
+
     <!--groupName column-->
     <ng-container matColumnDef="groupName">
         <th mat-header-cell *matHeaderCellDef> Gruppenname</th>

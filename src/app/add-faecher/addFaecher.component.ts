@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import {addFaecherListService } from '../shared/addFaecher.service';
+import { UserService } from '../shared/user.service';
 
 @Component({
   selector: 'app-fach',
@@ -13,7 +14,7 @@ export class FaecherComponent implements OnInit {
   public Fachbeschreibung = '';
   public displayedColumns = ['Fachname', 'Fachbeschreibung', 'Löschen' ]
 
-  constructor(public FaecherService: addFaecherListService) {
+  constructor(public FaecherService: addFaecherListService, public usrService: UserService) {
   }
 
   ngOnInit(): void {
