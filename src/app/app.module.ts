@@ -8,7 +8,7 @@ import { TodoListComponent } from './todo-list/todo-list.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import {GruppeComponent} from './gruppe/gruppe.component';
 
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireAuthModule } from '@angular/fire/auth';
@@ -29,6 +29,10 @@ import {NoopAnimationsModule } from '@angular/platform-browser/animations';
 import {MatSortModule} from '@angular/material/sort';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatDialogModule} from '@angular/material/dialog';
+
+import {MatToolbarModule} from '@angular/material/toolbar';
+import {MatGridListModule} from '@angular/material/grid-list';
+
 
 @NgModule({
   declarations: [
@@ -56,6 +60,9 @@ import {MatDialogModule} from '@angular/material/dialog';
     MatSortModule,
     MatPaginatorModule,
     MatDialogModule,
+    MatToolbarModule,
+    MatGridListModule,
+    ReactiveFormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

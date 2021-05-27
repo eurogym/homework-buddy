@@ -1,7 +1,7 @@
 <h2>Dashboard</h2>
 
 <div class='create'>
-  <button mat-raised-button (click)="onCreate">
+  <button mat-raised-button (click)="onCreate()">
     <mat-icon>add</mat-icon>create
   </button>
 </div>
@@ -12,7 +12,9 @@
     <ng-container matColumnDef="actions">
       <th mat-header-cell  *matHeaderCellDef mat-sort-header> Status </th>
       <td mat-cell *matCellDef="let element" >
-        <button mat-button (click)="todoListService.toggleDoneStateById4User(element)">Done</button>
+        <button mat-button (click)="todoListService.toggleDoneStateById(element)">
+          <div *ngIf="!element.doneDate">Done</div>
+          <div *ngIf="element.doneDate">Undo</div></button>
         <button mat-icon-button color="warn"><mat-icon>launch</mat-icon></button>
     </ng-container>
 
@@ -25,7 +27,7 @@
     <!-- subject Column -->
     <ng-container matColumnDef="subject">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Fach </th>
-      <td mat-cell *matCellDef="let element"> {{element.subjectobj?.Fachname}}</td>
+      <td mat-cell *matCellDef="let element"> {{element.subject}}</td>
     </ng-container>
 
     <!-- group Column -->
@@ -62,7 +64,7 @@
   <br>
   <br>
   <br>
-
+  <p>Done anzeigen: <input type="checkbox" [(ngModel)]="showDone"></p>
 <!--  Neue Tabelle -->
 <table mat-table [dataSource]="(todoListService.todos$ | todoFilterPipe: (true))" class="mat-elevation-z8">
 
@@ -70,7 +72,7 @@
   <ng-container matColumnDef="actions">
     <th mat-header-cell  *matHeaderCellDef > Status </th>
     <td mat-cell *matCellDef="let element" >
-      <button mat-button (click)="todoListService.toggleDoneStateById4User(element)">Undo</button>
+      <button mat-button (click)="todoListService.toggleDoneStateById(element)"><div *ngIf="!element.doneDate">Done</div><div *ngIf="element.doneDate">Undo</div></button>
   </ng-container>
 
    <!-- TodoDueDate Column -->
@@ -82,7 +84,7 @@
   <!-- subject Column -->
   <ng-container matColumnDef="subject">
     <th mat-header-cell *matHeaderCellDef> Fach </th>
-    <td mat-cell *matCellDef="let element"> {{element.subjectobj?.Fachname}} </td>
+    <td mat-cell *matCellDef="let element"> {{element.subject}} </td>
   </ng-container>
 
   <!-- group Column -->

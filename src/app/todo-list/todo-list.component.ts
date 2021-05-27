@@ -4,6 +4,7 @@ import { TodoListService } from '../shared/todo-list.service';
 import { formatDate } from '@angular/common';
 import { GruppeFBListService } from '../shared/gruppe-fb-list.service';
 import {addFaecherListService } from '../shared/addFaecher.service';
+import { FormControl, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-todo-list',
