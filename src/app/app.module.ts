@@ -32,6 +32,7 @@ import {MatDialogModule} from '@angular/material/dialog';
 
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatGridListModule} from '@angular/material/grid-list';
+import { GroupFilterPipe } from './pipes/group-filter.pipe';
 
 
 @NgModule({
@@ -41,7 +42,8 @@ import {MatGridListModule} from '@angular/material/grid-list';
     DashboardComponent,
     TodoFilterPipePipe,
     GruppeComponent,
-    FaecherComponent
+    FaecherComponent,
+    GroupFilterPipe
   ],
   imports: [
     BrowserModule,

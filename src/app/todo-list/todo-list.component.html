@@ -6,11 +6,11 @@
   <select id="subject" name="subject" [(ngModel)]="subject">
     <option *ngFor="let item of (addFaecherListService.fach$ | async)" [value]="item.id">{{item.Fachname}}</option>
   </select> <br/>
-  
+
   <!-- Gruppe -->
   <label for="gruppen">Wähle eine Gruppe aus:</label>
   <select id="gruppen" name="gruppen" [(ngModel)]="group">
-    <option *ngFor="let item of (GruppenFBListservice.gruppen$ | async)" [value]="item.id">{{item.Gruppenname}}</option>
+    <option *ngFor="let item of (GruppenFBListservice.gruppen$ | groupFilter | async)" [value]="item.id">{{item.Gruppenname}}</option>
   </select> <br/>
 
   <!-- Kategorie -->

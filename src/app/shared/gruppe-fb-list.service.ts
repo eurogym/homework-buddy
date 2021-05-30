@@ -5,7 +5,8 @@ import { empty, Observable, Subscription } from 'rxjs';
 import { Todo } from './todo';
 import { GruppeFB } from './gruppe-fb';
 import { GruppeComponent } from '../gruppe/gruppe.component';
-import { filter, first } from 'rxjs/operators';
+import { filter, first, map } from 'rxjs/operators';
+import { UserService } from './user.service';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +16,7 @@ export class GruppeFBListService {
 
   private userId = '';
 
-  constructor(public firestore: AngularFirestore, public afAuth: AngularFireAuth) {
+  constructor(public firestore: AngularFirestore, public afAuth: AngularFireAuth, public usrService: UserService) {
     this.afAuth.authState.subscribe(state => {
       if (state?.uid) {
         this.userId = state.uid;
@@ -30,7 +31,13 @@ export class GruppeFBListService {
     });
   }
 
-
+  public getUsersGroups(): Observable<GruppeFB[]>{
+    return this.firestore.collection<GruppeFB>('gruppen', ref => ref.orderBy('Gruppenname'))
+      .valueChanges({idField: 'id'})
+      .pipe(
+        map(data => data.filter(grp => this.usrService.memberGroupsArr.indexOf(grp.id) !== -1))
+      );
+  }
 
   public getGroupbyId(grpId: string): Observable<GruppeFB[]>{
     // return this.firestore.doc<GruppeFB>('gruppen/' + grpId).valueChanges();
