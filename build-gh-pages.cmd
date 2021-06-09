@@ -1,2 +1,2 @@
-ng build --prod --base-href "https://github.com/eurogym/homework-buddy/"
+ng build --prod --base-href "https://eurogym.github.io/homework-buddy/"
 npx angular-cli-ghpages --dir=dist/homework-buddy
