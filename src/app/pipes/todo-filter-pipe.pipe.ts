@@ -21,7 +21,8 @@ export class TodoFilterPipePipe implements PipeTransform {
 
     return todos.pipe(map(t => {  
       return t.filter( t => { 
-        return ((done === true && (t.doneByUser?.indexOf(this.usrService.UserId) !== -1)) || (done === false &&  ((!t.doneByUser) || t.doneByUser?.indexOf(this.usrService.UserId) === -1))) 
+        return ((done === true && t.doneByUser && (t.doneByUser?.indexOf(this.usrService.UserId) !== -1)) || 
+          (done === false &&  ((!t.doneByUser) || t.doneByUser?.indexOf(this.usrService.UserId) === -1))) 
           && (this.usrService.memberGroupsArr.indexOf(t.group) !== -1)
       });
     }))
