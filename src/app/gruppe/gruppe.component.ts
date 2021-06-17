@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { GruppeFBListService} from '../shared/gruppe-fb-list.service';
 import { UserService } from '../shared/user.service';
+import {MatDialog, MatDialogConfig, MatDialogRef, MAT_DIALOG_DATA} from "@angular/material/dialog"
 
 @Component({
   selector: 'app-gruppe',
@@ -15,11 +16,18 @@ export class GruppeComponent implements OnInit {
   public displayedColumns = ['Löschen', 'groupName', 'groupDescription'];
 
 
-  constructor(public GruppenListService: GruppeFBListService, public usrService: UserService) {
+  constructor(public GruppenListService: GruppeFBListService, public usrService: UserService, 
+    private dialog: MatDialog) {
   }
 
   ngOnInit(): void {
   }
+
+  onCreate(): void {
+    const dialogConfig = new MatDialogConfig();
+    let gruppeDialog =  this.dialog.open(GruppeComponent, dialogConfig);
+   }
+
   public addGruppe(): void {
 
     if (this.Gruppenname ) {

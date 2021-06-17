@@ -50,6 +50,7 @@ export class GruppeFBListService {
   }
 
   public deleteGruppeById(id: string): void {
+    if (confirm('Wollen Sie wirklich Löschen?'))
     this.firestore.doc('gruppen/' + id).delete();
     }
 
