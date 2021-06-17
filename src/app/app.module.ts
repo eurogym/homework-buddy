@@ -18,6 +18,7 @@ import { TodoFilterPipePipe } from './pipes/todo-filter-pipe.pipe';
 import {MatTableModule, _MatTableDataSource} from '@angular/material/table';
 import {MatButtonModule} from '@angular/material/button';
 import {MatInputModule} from '@angular/material/input';
+import {MatCheckboxModule} from '@angular/material/checkbox';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { FaecherComponent } from './add-faecher/addFaecher.component';
@@ -71,6 +72,7 @@ import { GroupFilterPipe } from './pipes/group-filter.pipe';
     MatDatepickerModule,
     MatNativeDateModule,
     ReactiveFormsModule,
+    MatCheckboxModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
