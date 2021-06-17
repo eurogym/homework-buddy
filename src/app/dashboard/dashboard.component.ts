@@ -31,6 +31,7 @@ export class DashboardComponent implements OnInit {
   public group ='';
   public category ='';
   public displayedColumns = ['actions','todoDueDate','subject','group', 'category', 'todoDescription',] //,'deleteTodoById' ]
+  public bShowDoneRecords = false;
 
 
 

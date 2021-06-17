@@ -6,7 +6,7 @@
   </button>
 </div>
 <!--  Neue Tabelle -->
-<table mat-table [dataSource]="(todoListService.todos$ | todoFilterPipe: (false))" class="mat-elevation-z8" matSort >
+<table mat-table  [dataSource]="(todoListService.todos$ | todoFilterPipe: (false))" class="mat-elevation-z8" matSort >
 
     <!-- Toggle Done Column-->
     <ng-container matColumnDef="actions">
@@ -63,8 +63,9 @@
   <br>
   <br>
 
+  <mat-checkbox [(ngModel)]="bShowDoneRecords">Erledigte anzeigen</mat-checkbox>
 <!--  Neue Tabelle -->
-<table mat-table [dataSource]="(todoListService.todos$ | todoFilterPipe: (true))" class="mat-elevation-z8">
+<table mat-table *ngIf="bShowDoneRecords" [dataSource]="(todoListService.todos$ | todoFilterPipe: (true))" class="mat-elevation-z8">
 
   <!-- Toggle Done Column-->
   <ng-container matColumnDef="actions">
