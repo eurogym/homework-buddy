@@ -11,7 +11,7 @@ import { GruppeFBListService } from '../shared/gruppe-fb-list.service';
 
 import { TodoListComponent } from '../todo-list/todo-list.component';
 import {MatDialog, MatDialogConfig, MatDialogRef, MAT_DIALOG_DATA} from "@angular/material/dialog"
- 
+
 
 
 
@@ -46,6 +46,16 @@ export class DashboardComponent implements OnInit {
  onCreate(): void {
   const dialogConfig = new MatDialogConfig();
   let todoDialog =  this.dialog.open(TodoListComponent, dialogConfig);
+ }
+
+ editTodo(elem: Todo): void {
+  const dialogConfig = new MatDialogConfig();
+  let todoDialog =  this.dialog.open(TodoListComponent, dialogConfig);
+  todoDialog.componentInstance.todoID = elem.id;
+  todoDialog.componentInstance.category = elem.category;
+  todoDialog.componentInstance.group = elem.group;
+  todoDialog.componentInstance.subject = elem.subject;
+  todoDialog.componentInstance.todoDescription = elem.description;
  }
 
   // getTodoPercentage(): number {

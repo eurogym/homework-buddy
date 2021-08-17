@@ -5,6 +5,7 @@ import { formatDate } from '@angular/common';
 import { GruppeFBListService } from '../shared/gruppe-fb-list.service';
 import {addFaecherListService } from '../shared/addFaecher.service';
 import { FormControl, FormGroup } from '@angular/forms';
+import { Todo } from '../shared/todo';
 
 @Component({
   selector: 'app-todo-list',
@@ -12,6 +13,7 @@ import { FormControl, FormGroup } from '@angular/forms';
   styleUrls: ['./todo-list.component.scss']
 })
 export class TodoListComponent implements OnInit {
+  public todoID: string = '';
   public todoDescription = '';
   public todoDueDate = formatDate(new Date(), 'yyyy-MM-dd', 'en');
   public showDone = false;

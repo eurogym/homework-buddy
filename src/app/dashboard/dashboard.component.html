@@ -13,7 +13,7 @@
       <th mat-header-cell  *matHeaderCellDef mat-sort-header> Status </th>
       <td mat-cell *matCellDef="let element" >
         <button mat-button (click)="todoListService.toggleDoneStateById4User(element)">Done</button>
-        <button mat-icon-button color="warn"><mat-icon>launch</mat-icon></button>
+        <button mat-icon-button color="warn" (click)="editTodo(element)"><mat-icon>settings</mat-icon></button>
     </ng-container>
 
      <!-- TodoDueDate Column -->
