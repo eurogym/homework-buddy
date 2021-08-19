@@ -1,7 +1,7 @@
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Injectable } from '@angular/core';
-import { empty, Observable, Subscription } from 'rxjs';
+import { empty, Observable, pipe, Subscription } from 'rxjs';
 import { Todo } from './todo';
 import { GruppeFB } from './gruppe-fb';
 import { GruppeComponent } from '../gruppe/gruppe.component';
@@ -50,8 +50,14 @@ export class GruppeFBListService {
   }
 
   public deleteGruppeById(id: string): void {
-    if (confirm('Wollen Sie wirklich Löschen?'))
-    this.firestore.doc('gruppen/' + id).delete();
+    if (confirm('Wollen Sie wirklich Löschen?')){
+      this.firestore.collection<Todo>('todos', ref => ref.where("group", "==", id)).valueChanges({idField: 'id'}).subscribe(tds => {
+        tds.map((t: Todo) => {
+          this.firestore.doc(`todos/${t.id}`).delete();
+        })
+      });
+    	this.firestore.doc('gruppen/' + id).delete();
+    }
     }
 
   public updateGruppeById(gruppen: GruppeFB): void {
