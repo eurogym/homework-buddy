@@ -1,4 +1,6 @@
 import { AngularFireAuth } from '@angular/fire/auth';
+import firestore from 'firebase/app';
+
 import { AngularFirestore, combineChange } from '@angular/fire/firestore';
 import { Injectable } from '@angular/core';
 import { Observable, Subscription, empty, forkJoin, combineLatest, merge } from 'rxjs';
@@ -42,7 +44,7 @@ export class TodoListService {
     }
   }
 
-  public addTodo(subject: string, group: string, description: string, category: string, dueDate: Date): void {
+  public addTodo(subject: string, group: string, description: string, category: string, dueDate: firestore.firestore.Timestamp): void {
     this.firestore.collection('todos').add
     ({ dueDate: dueDate, subject: subject, group: group, description: description, category: category, userUid: this.userUid });
   }

@@ -47,7 +47,7 @@ import { GroupFilterPipe } from './pipes/group-filter.pipe';
     TodoFilterPipePipe,
     GruppeComponent,
     FaecherComponent,
-    GroupFilterPipe
+    GroupFilterPipe,
   ],
   imports: [
     BrowserModule,

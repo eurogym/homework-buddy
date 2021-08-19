@@ -7,7 +7,6 @@ import { GruppeComponent } from './gruppe/gruppe.component';
 import { FaecherComponent} from './add-faecher/addFaecher.component'
 const routes: Routes = [
   { path: 'dashboard', component: DashboardComponent, canActivate: [AngularFireAuthGuard] },
-  { path: 'todo-list', component: TodoListComponent, canActivate: [AngularFireAuthGuard] },
   { path: 'Gruppe', component: GruppeComponent, canActivate: [AngularFireAuthGuard] },
   { path: 'fach', component: FaecherComponent, canActivate: [AngularFireAuthGuard] }
 ];

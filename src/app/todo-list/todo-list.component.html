@@ -5,7 +5,7 @@
   <p>
     <mat-form-field appearance="legacy">
       <mat-label>Wähle ein Fach aus:</mat-label>
-      <mat-select id="subject" name="subject" [(ngModel)]="subject">
+      <mat-select id="subject" name="subject" [(ngModel)]="todoItem.subject">
         <mat-option *ngFor="let item of (addFaecherListService.fach$ | async)" [value]="item.id">{{item.Fachname}}</mat-option>
       </mat-select>
       <mat-hint align="end">Wähle das Fach aus.</mat-hint>
@@ -15,7 +15,7 @@
   <p>
     <mat-form-field appearance="legacy">
       <mat-label>Wähle eine Gruppe aus:</mat-label>
-      <mat-select id="group" name="group" [(ngModel)]="group">
+      <mat-select id="group" name="group" [(ngModel)]="todoItem.group">
         <mat-option *ngFor="let item of (GruppenFBListservice.gruppen$ | groupFilter | async)" [value]="item.id">{{item.Gruppenname}}</mat-option>
       </mat-select>
     </mat-form-field>
@@ -25,7 +25,7 @@
   <p>
     <mat-form-field appearance="legacy">
       <mat-label>Wähle eine Kategorie aus:</mat-label>
-      <mat-select id="category" name="category" [(ngModel)]="category">
+      <mat-select id="category" name="category" [(ngModel)]="todoItem.category">
         <mat-option value="HÜ">Hausübung</mat-option>
         <mat-option value="WH">Wiederholung</mat-option>
         <mat-option value="Test">Test</mat-option>
@@ -36,7 +36,7 @@
   <p>
     <mat-form-field appearance="legacy">
       <mat-label>Datum fällig:</mat-label>
-      <input matInput [matDatepicker]="picker" [(ngModel)]="todoDueDate">
+      <input matInput appFirestoredate [matDatepicker]="picker" [(ngModel)]="dueDate">
       <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
       <mat-datepicker #picker></mat-datepicker>
     </mat-form-field>
@@ -44,11 +44,16 @@
   <p>
     <mat-form-field appearance="legacy">
       <mat-label>Beschreibung:</mat-label>
-      <textarea matInput cols = "50" rows = "2" [(ngModel)]="todoDescription"></textarea>
+      <textarea matInput cols = "50" rows = "2" [(ngModel)]="todoItem.description"></textarea>
     </mat-form-field>
   </p>
+  <div *ngIf="todoItem.id == ''">
+    <button mat-button (click)="addTodo()">Hinzufügen</button>
+  </div>
+  <div *ngIf="todoItem.id != ''">
+    <button mat-button (click)="updateTodo()">Speichern</button>
+  </div>
 
-  <button mat-button (click)="addTodo()">Hinzufügen</button>
 </div>
 
 </mat-dialog-content>

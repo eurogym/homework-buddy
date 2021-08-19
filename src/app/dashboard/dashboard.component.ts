@@ -51,11 +51,8 @@ export class DashboardComponent implements OnInit {
  editTodo(elem: Todo): void {
   const dialogConfig = new MatDialogConfig();
   let todoDialog =  this.dialog.open(TodoListComponent, dialogConfig);
-  todoDialog.componentInstance.todoID = elem.id;
-  todoDialog.componentInstance.category = elem.category;
-  todoDialog.componentInstance.group = elem.group;
-  todoDialog.componentInstance.subject = elem.subject;
-  todoDialog.componentInstance.todoDescription = elem.description;
+  todoDialog.componentInstance.todoItem = <Todo>elem;
+  todoDialog.componentInstance.dueDate = new Date(elem.dueDate.seconds * 1000);
  }
 
   // getTodoPercentage(): number {
