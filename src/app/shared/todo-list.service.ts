@@ -54,7 +54,7 @@ export class TodoListService {
   }
 
   public updateTodoById(todo: Todo): void {
-    this.firestore.doc('todos/' + todo.id).update({ description: todo.description, dueDate: todo.dueDate });
+    this.firestore.doc('todos/' + todo.id).update({ description: todo.description, dueDate: todo.dueDate, group: todo.group, subject: todo.subject, category: todo.category });
   }
 
   public toggleDoneStateById(todo: Todo): void {
