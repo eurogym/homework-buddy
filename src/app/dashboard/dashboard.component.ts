@@ -11,6 +11,7 @@ import { GruppeFBListService } from '../shared/gruppe-fb-list.service';
 
 import { TodoListComponent } from '../todo-list/todo-list.component';
 import {MatDialog, MatDialogConfig, MatDialogRef, MAT_DIALOG_DATA} from "@angular/material/dialog"
+import { UserService } from '../shared/user.service';
 
 
 
@@ -35,26 +36,30 @@ export class DashboardComponent implements OnInit {
 
 
 
-  constructor( public todoListService: TodoListService, public grpService: GruppeFBListService,
+  constructor( public todoListService: TodoListService, public grpService: GruppeFBListService, public usrService: UserService,
     private dialog: MatDialog ) {
 
   }
 
   ngOnInit(): void {
   }
-//
- onCreate(): void {
+
+  onCreate(): void {
   const dialogConfig = new MatDialogConfig();
   let todoDialog =  this.dialog.open(TodoListComponent, dialogConfig);
- }
+  }
 
- editTodo(elem: Todo): void {
+  editTodo(elem: Todo): void {
   const dialogConfig = new MatDialogConfig();
   let todoDialog =  this.dialog.open(TodoListComponent, dialogConfig);
   todoDialog.componentInstance.todoItem = <Todo>elem;
   todoDialog.componentInstance.dueDate = new Date(elem.dueDate.seconds * 1000);
- }
-
+  }
+  deleteTodo(elem: Todo): void {
+    if (confirm('Wollen Sie wirklich Löschen?')){
+      this.todoListService.deleteTodoById(elem.id);
+    }
+  }
   // getTodoPercentage(): number {
   //   if (this.todoListService.todos.length) {
   //     return this.todoListService.todos.filter(t => !t.doneDate).length / this.todoListService.todos.length * 100;
@@ -71,4 +76,4 @@ export class DashboardComponent implements OnInit {
   //   }
   // }
 
-  }
+}
