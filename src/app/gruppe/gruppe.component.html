@@ -4,7 +4,7 @@
 <div class="addItem">
   <mat-form-field class="Gruppenname">
     <mat-label>Gruppenname</mat-label>
-    <input matInput type="text" [(ngModel)]="Gruppenname">
+    <input matInput type="text" [(ngModel)]="Gruppenname" required>
   </mat-form-field>
 
   <mat-form-field class="Beschreibung">
@@ -21,11 +21,11 @@
   <ng-container matColumnDef="Löschen">
     <th mat-header-cell  *matHeaderCellDef >Löschen</th>
     <td mat-cell *matCellDef="let element" >
-      <span *ngIf="usrService.memberGroupsArr.indexOf(element.id) === -1"><button mat-button (click)="usrService.addUser2Group(element.id)">Beitreten</button></span>
-      <span *ngIf="usrService.memberGroupsArr.indexOf(element.id) !==-1"><button mat-button (click)="usrService.remUserGroup(element.id)">Verlassen</button></span>
-      <span *ngIf="element.userUid === usrService.UserId"><button mat-raised-button color="warn" (click)="GruppenListService.deleteGruppeById(element.id)">
+      <span *ngIf="element.userUid === usrService.UserId"><button mat-icon-button color="warn" (click)="GruppenListService.deleteGruppeById(element.id)">
         <mat-icon>delete</mat-icon>
       </button></span>
+      <span *ngIf="usrService.memberGroupsArr.indexOf(element.id) === -1"><button mat-button (click)="usrService.addUser2Group(element.id)">Beitreten</button></span>
+      <span *ngIf="usrService.memberGroupsArr.indexOf(element.id) !==-1"><button mat-button (click)="usrService.remUserGroup(element.id)">Verlassen</button></span>
   </ng-container>
 
     <!--groupName column-->

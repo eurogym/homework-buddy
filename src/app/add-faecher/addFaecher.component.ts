@@ -12,7 +12,7 @@ export class FaecherComponent implements OnInit {
 
   public Fachname = '';
   public Fachbeschreibung = '';
-  public displayedColumns = ['Fachname', 'Fachbeschreibung', 'Löschen' ]
+  public displayedColumns = ['Löschen', 'Fachname', 'Fachbeschreibung' ]
 
   constructor(public FaecherService: addFaecherListService, public usrService: UserService) {
   }

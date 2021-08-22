@@ -42,8 +42,9 @@ export class addFaecherListService {
   }
 
   public deleteFachById(id: string): void {
-    this.firestore.doc('fach/' + id).delete();
-    }
+    if (confirm('Wollen Sie wirklich Löschen?'))
+      this.firestore.doc('fach/' + id).delete();
+  }
 
   public updateFachById(fach: Faecher): void {
       this.firestore.doc('fach/' + fach.id).update({ Fachname: fach.Fachname});
