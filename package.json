@@ -1,6 +1,6 @@
 {
   "name": "homework-buddy",
-  "version": "0.0.0",
+  "version": "2021.08.23",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",

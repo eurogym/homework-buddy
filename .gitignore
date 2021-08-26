@@ -1,4 +1,6 @@
-
+.env
+environment.prod.ts
+environment.ts
 # Created by https://www.toptal.com/developers/gitignore/api/angular,visualstudiocode
 # Edit at https://www.toptal.com/developers/gitignore?templates=angular,visualstudiocode
 
