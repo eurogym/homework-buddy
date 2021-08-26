@@ -1,7 +1,7 @@
 export const environment = {
   production: true,
   firebaseConfig : {
-    apiKey: "AIzaSyBrj4zqL8pALwADBTly446FirqqSQNBMNg",
+    apiKey: "${{ secrets.GITHUB_TOKEN }}",
     authDomain: "todolist-demo-e8008.firebaseapp.com",
     databaseURL: "https://todolist-demo-e8008.firebaseio.com",
     projectId: "todolist-demo-e8008",
